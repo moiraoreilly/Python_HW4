@@ -44,8 +44,6 @@ def read_list():
 
 
 def track(watchlist):
-    read_directory()
-    tracked = input(print("Enter a list to track: "))
     start_time = time()
     prompt = ''
     while True:
@@ -64,14 +62,14 @@ def track(watchlist):
 
 
 def add_list():
-    pass
-
-
-def edit_list():
     while True:
         new_list = input(print("Enter a symbol: ")).upper()
         if new_list == '':
             name = input(print("Enter a name for watchlist: "))
+
+
+def edit_list():
+    print("Enter a list to add")
 
 
 def delete_list():
@@ -86,6 +84,7 @@ def main():
         display_menu()
         choice = (input("Enter your selection: "))
         if choice == "1":
+            read_list()
             watchlist = "AMZN AAPL GOOG FB".split()
             options[choice](watchlist)
         elif choice in "234":
