@@ -43,10 +43,6 @@ def read_list():
         return "Select add a list from the menu..."
 
 
-def save_list():
-    pass
-
-
 def track(watchlist):
     start_time = time()
     prompt = ''
@@ -80,14 +76,12 @@ def add_list():
         for stock in stocks:
             file.write(stock.strip())
 
-    #save_list()
 
 def edit_list():
     read_directory()
     edited = input("Enter a list to edit: ")
 
 
-    #save_list()
 
 
 def delete_list():
