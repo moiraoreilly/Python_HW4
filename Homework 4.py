@@ -43,6 +43,10 @@ def read_list():
         return "Select add a list from the menu..."
 
 
+def save_list():
+    pass
+
+
 def track(watchlist):
     start_time = time()
     prompt = ''
@@ -62,18 +66,44 @@ def track(watchlist):
 
 
 def add_list():
+    stocks = []
     while True:
-        new_list = input(print("Enter a symbol: ")).upper()
-        if new_list == '':
-            name = input(print("Enter a name for watchlist: "))
+        stock = input("Enter a symbol: ").upper()
+        if stock != '' and stock not in stocks:
+            stocks.append(stock)
+        else:
+            if stock == '':
+                watchlist_name = input("Enter a name for watchlist: ")
+                watchlist = os.path.join('../watchlists/', watchlist_name + '.watchlist')
+                break
+    with open(watchlist, 'w') as file:
+        for stock in stocks:
+            file.write(stock.strip())
 
+    #save_list()
 
 def edit_list():
-    print("Enter a list to add")
+    read_directory()
+    edited = input("Enter a list to edit: ")
+
+
+    #save_list()
 
 
 def delete_list():
-    print("Enter a list to delete: ")
+    watchlists = read_directory()
+    if watchlists:
+        choice = int(input("Enter a watchlist number: "))
+        chosen_file = watchlists[choice - 1]
+        if os.path.exists(chosen_file):
+            answer = input("Are you sure you want to delete this watchlist? (Y/N) ").lower()
+            if answer == 'y':
+                os.remove(chosen_file)
+                print(f"{chosen_file} has been deleted.")
+            else:
+                print("This file will not be deleted.")
+        else:
+            print(f"{chosen_file} does not exist.")
 
 
 options = {"1": track, "2": add_list, "3": edit_list, "4": delete_list}
@@ -85,9 +115,14 @@ def main():
         choice = (input("Enter your selection: "))
         if choice == "1":
             read_list()
+            # not sure how to make the chosen watchlist be the one that gets tracked
             watchlist = "AMZN AAPL GOOG FB".split()
             options[choice](watchlist)
-        elif choice in "234":
+        elif choice in "2":
+            options[choice]()
+        elif choice in "3":
+            options[choice]()
+        elif choice in "4":
             options[choice]()
         elif choice == '5':
             print("Goodbye!")
