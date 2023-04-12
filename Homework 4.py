@@ -75,6 +75,7 @@ def add_list():
     with open(watchlist, 'w') as file:
         for stock in stocks:
             file.write(stock.strip())
+    print(f"{watchlist_name} has been added.")
 
 
 def edit_list():
@@ -82,22 +83,20 @@ def edit_list():
     edited = input("Enter a list to edit: ")
 
 
-
-
 def delete_list():
     watchlists = read_directory()
     if watchlists:
-        choice = int(input("Enter a watchlist number: "))
-        chosen_file = watchlists[choice - 1]
-        if os.path.exists(chosen_file):
+        choice = input("Enter a watchlist: ")
+        watchlist = os.path.join('../watchlists/', choice + '.watchlist')
+        if os.path.exists(watchlist):
             answer = input("Are you sure you want to delete this watchlist? (Y/N) ").lower()
             if answer == 'y':
-                os.remove(chosen_file)
-                print(f"{chosen_file} has been deleted.")
+                os.remove(watchlist)
+                print(f"{choice} has been deleted.")
             else:
                 print("This file will not be deleted.")
         else:
-            print(f"{chosen_file} does not exist.")
+            print(f"{choice} does not exist.")
 
 
 options = {"1": track, "2": add_list, "3": edit_list, "4": delete_list}
