@@ -74,19 +74,33 @@ def add_list():
                 break
     with open(watchlist, 'w') as file:
         for stock in stocks:
-            file.write(stock.strip())
+            file.write(stock.strip() + ' ')
     print(f"{watchlist_name} has been added.")
 
 
 def edit_list():
     read_directory()
     edited = input("Enter a list to edit: ")
+    watchlist = os.path.join('../watchlists/', edited + '.watchlist')
+    file = open(watchlist, 'a+')
+    while True:
+        add = input(f"Would you like to add or delete? (A/D/Enter to stop) ").lower()
+        if add == 'a':
+            symbol = input(f"Please enter a symbol to add to {edited}: ").upper()
+            if symbol not in watchlist:
+                file.write(symbol + " ")
+        elif add == 'd':
+            pass
+        elif add == '':
+            break
+        else:
+            print("Please enter A, D, or press enter to stop")
 
 
 def delete_list():
     watchlists = read_directory()
     if watchlists:
-        choice = input("Enter a watchlist: ")
+        choice = (input("Enter a watchlist: "))
         watchlist = os.path.join('../watchlists/', choice + '.watchlist')
         if os.path.exists(watchlist):
             answer = input("Are you sure you want to delete this watchlist? (Y/N) ").lower()
