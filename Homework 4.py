@@ -80,15 +80,12 @@ def add_list():
 
 
 def edit_list():
-    read_directory()
-    edited = input("Enter a list to edit: ")
-    watchlist = os.path.join('../watchlists/', edited + '.watchlist')
-
+    stocks, watchlist = read_list()
     while True:
         add = input(f"Would you like to add or delete? (A/D/Enter to stop) ").lower()
         if add == 'a':
             file = open(watchlist, 'a+')
-            symbol = input(f"Please enter a symbol to add to {edited}: ").upper()
+            symbol = input(f"Please enter a symbol to add: ").upper()
             if symbol not in watchlist:
                 file.write(symbol + " ")
         elif add == 'd':
@@ -109,19 +106,18 @@ def edit_list():
 
 
 def delete_list():
-    watchlists = read_directory()
+    watchlists = read_list()[1]
     if watchlists:
-        choice = (input("Enter a watchlist: "))
-        watchlist = os.path.join('../watchlists/', choice + '.watchlist')
+        watchlist = os.path.join('../watchlists/', watchlists)
         if os.path.exists(watchlist):
             answer = input("Are you sure you want to delete this watchlist? (Y/N) ").lower()
             if answer == 'y':
                 os.remove(watchlist)
-                print(f"{choice} has been deleted.")
+                print(f"{watchlists} has been deleted.")
             else:
                 print("This file will not be deleted.")
         else:
-            print(f"{choice} does not exist.")
+            print(f"{watchlists} does not exist.")
 
 
 def main():
